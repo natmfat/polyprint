@@ -1,85 +1,52 @@
-const expect = {
-    "undefined": (v) => v == undefined,
-    "null": (v) => v == null && v !== undefined,
+import { schema } from "./schema.js"
 
-    "string": (v, {length, min=0, max=Infinity}) => (
-        typeof v == "string"
-            && (length ? v.length == length : true)
-            && (v.length >= min && v.length <= max)
-    ),
+const expect = true
+const failed = []
 
-    "number": (v, {finite, integer, even, min=0, max=Infinity}) => (
-        isNaN(v) 
-            ? false
-            : (finite ? isFinite(v) : true)
-                && (integer ? parseInt(v) == v : true)
-                && (even ? v % 2 == 0 : true)
-                && (v >= min && v <= max)
-    ),
+// const arrayTemplate = Array.from({length: 3}, () => Number)
 
-    "boolean": (v) => (
-        typeof v == "boolean"
-    ),
+const tests = [
+    {args: [undefined, undefined], expect},
+    {args: [null, null], expect},
     
-    "array": (v, {length, min=0, max=Infinity, format}) => (
-        Array.isArray(v)
-            ? (length ? v.length == length : true)
-                && (v.length >= min && v.length <= max)
-                && (format ? v.filter((f, i) => type(format[i]) == type(f)).length == v.length : true)
-            : false
-    ),
+    {args: ["state-box", String], expect},
+    {args: ["state-box", String, {length: 9}], expect},
+    {args: ["state-box", String, {min: 0, max:5}]},
 
-    "function": (v) => (
-        typeof v == "function"
-    ),
-
-    "object": (v, _, template) => {
-        const passed = typeof v == "object" && v !== null
-
-        if(passed) {
-            for(const [key, value] of Object.entries(v)) {
-                if(template.hasOwnProperty(key)) {
-                    return s(value, template[key])
-                } else {
-                    return false
-                }
-            }
-        } else {
-            console.log("not an object")
-            return false
-        }
-    }
-}
-
-const type = (check) => {
-    const main = () => {
-        const str = String(check.prototype ? check.prototype.constructor : check.constructor).toLowerCase()
-        const cname = str.match(/function\s(\w*)/)[1]
-        const aliases = ['', 'anonymous']
+    {args: [5, Number], expect},
+    {args: [5.3, Number, {integer: true}]},
+    {args: [5, Number, {finite: true}], expect},
+    {args: [6, Number, {even: true}], expect},
+    {args: [6, Number, {min: 0, max: 10}], expect},
     
-        return aliases.includes(cname) ? "function" : cname
+    {args: [true, Boolean], expect},
+    {args: [false, Boolean], expect},
+
+    {args: [[1, 2, 3], [Number, Number, Number]], expect},
+    {args: [[1, 2, 3], Array.from({length: 3}, () => Number)], expect},
+
+    {args: [(() => {}), Function], expect},
+
+    {args: [{test: "hello"}, {test: String}], expect},
+    {args: [{test: {sub_test: "hello"}}, {test: {sub_test: Number}}]},
+    {args: [{test: {sub_test: "hello"}}, {test: {sub_test: String}}], expect}
+    // {args: [], expect},
+    // {args: [], expect},
+
+].forEach(({args, expect}, testID) => {
+    console.log("test:", testID)
+    console.log("args:", args)
+
+    const result = schema(...args)
+    const summary = result == !!expect ? "passed" : "failed"
+    console.log("result:", result)
+    console.log(summary, "test:", testID, "\n")
+
+
+    if(summary == "failed") {
+        failed.push(testID)
     }
+})
 
-    return check
-        ? main(check)
-        : typeof check == "object" && check == null
-            ? "null"
-            : typeof check
-}
-
-export const s = (v, template, options={}) => {
-    const method = type(template)
-
-    if(method == "array") {
-        options.format = template
-    }
-
-    console.log("method:", method)
-
-    if(expect.hasOwnProperty(method)) {
-        return expect[method](v, options, template)
-    } else {
-        console.log("unknown method")
-        return false 
-    }
-}
+console.log("failed:", failed.length == 0 ? "none" : failed.join(', '))
+// console.log(Array.from({length: 3}, () => Number))
