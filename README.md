@@ -6,3 +6,9 @@ The dead simple schema builder. See the [docs](https://nathan-pham.github.io/pol
 
 Hold up. Why is this useful?  
 Good question friend on the Internet! Unfortunately, I don't have many answers...
+
+## Installation
+
+```
+>>> npm install the-poly-schema
+```

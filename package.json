@@ -1,5 +1,5 @@
 {
-  "name": "poly-schema",
+  "name": "the-poly-schema",
   "version": "1.0.0",
   "description": "The dead simple schema builder.",
   "main": "index.js",
