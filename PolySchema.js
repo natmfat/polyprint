@@ -13,9 +13,10 @@ export default class PolySchema {
     /**
      * determine if a object is valid according to the schema
      * @param {object} T - object to validate
+     * @param {boolean} strict - if props should be required
      * @returns {boolean}
      */
-    validate(T) {
+    validate(T, strict = false) {
         /**
          * determine if anything is an object
          * @param {any} T - literally anything
@@ -35,6 +36,15 @@ export default class PolySchema {
                 return true;
             }
 
+            // loop through T
+            if (strict) {
+                for (const [key, condition] of Object.entries(T)) {
+                    if (!(T.hasOwnProperty(key) && schema.hasOwnProperty(key))) {
+                        return false;
+                    }
+                }
+            }
+
             // loop through schema
             for (const [key, condition] of Object.entries(schema)) {
                 if (T.hasOwnProperty(key)) {
@@ -43,7 +53,7 @@ export default class PolySchema {
                     } else if (!condition(T[key])) {
                         return false;
                     }
-                } else {
+                } else if (strict) {
                     return false;
                 }
             }
