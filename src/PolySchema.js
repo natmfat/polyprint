@@ -1,10 +1,19 @@
 import PolyTypes from "./PolyTypes.js";
 
-export default class PolySchema {
+/** @file src/PolySchema.js */
+
+/**
+ * PolySchema class for defining & validating information
+ * @class
+ * @example
+ * const schema = new PolySchema({
+ *     _id: PolyTypes.string
+ * })
+ */
+class PolySchema {
     /**
      * create a new PolySchema
      * @param {object} schema - json of keys to PolyTypes
-     * @returns {PolySchema}
      */
     constructor(schema = {}) {
         this.schema = schema;
@@ -15,6 +24,10 @@ export default class PolySchema {
      * @param {object} T - object to validate
      * @param {boolean} strict - if props should be required
      * @returns {boolean}
+     * @example
+     * schema.validate({
+     *     _id: "Hello World"
+     * }) // => true
      */
     validate(T, strict = false) {
         /**
@@ -64,3 +77,5 @@ export default class PolySchema {
         return isObject(T) ? core(this.schema, T) : false;
     }
 }
+
+export default PolySchema;

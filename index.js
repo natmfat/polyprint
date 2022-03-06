@@ -1,5 +1,5 @@
-import PolySchema from "./PolySchema.js";
-import PolyTypes from "./PolyTypes.js";
+import PolySchema from "./src/PolySchema.js";
+import PolyTypes from "./src/PolyTypes.js";
 
 export default PolySchema;
 export { PolyTypes };

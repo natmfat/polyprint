@@ -1,0 +1,19 @@
+{
+    "tags": {
+        "allowUnknownTags": true,
+        "dictonaries": ["jsdoc"]
+    },
+    "source": {
+        "include": ["./src", "package.json", "README.md"],
+        "includePattern": ".js$",
+        "excludePattern": "(node_modules/|tests|docs)"
+    },
+    "plugins": ["plugins/markdown"],
+    "opts": {
+        "readme": "./README.md",
+        "destination": "./docs",
+        "template": "./node_modules/minami",
+        "recurse": true,
+        "verbose": true
+    }
+}
