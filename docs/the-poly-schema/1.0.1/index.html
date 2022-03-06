@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>PolySchema - Documentation</title>
+    <title>Home - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,10 +29,39 @@
 
 <div id="main">
     
-    <h1 class="page-title">PolySchema</h1>
-    
 
     
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><p><img src="https://project-banner.phamn23.repl.co/?title=Poly+Schema&amp;description=The+dead+simple+schema+builder.&amp;stack=node" alt="project banner"></p>
+<h1>Poly Schema</h1>
+<p>The dead simple schema builder. See the <a href="https://nathan-pham.github.io/poly-schema/poly-schema/1.0.0/">docs</a>.</p>
+<p>Hold up. Why is this useful?<br>
+Good question friend on the Internet! Unfortunately, I don't have many answers...</p>
+<h2>Installation</h2>
+<pre class="prettyprint source"><code>>>> npm install the-poly-schema
+</code></pre></article>
+    </section>
+
+
+
+
+
 
 
 
@@ -42,10 +71,8 @@
 <header>
     
         <h2>
-        PolySchema
+        src/PolySchema.js
         </h2>
-        
-            <div class="class-description"><p>PolySchema class for defining &amp; validating information</p></div>
         
     
 </header>
@@ -54,24 +81,10 @@
     <div class="container-overview">
     
         
-<div class="section-method">
+            <div class="description"><p>src/PolySchema.js</p></div>
+        
 
-    
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="PolySchema"><span class="type-signature"></span>new PolySchema<span class="signature">(schema)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>create a new PolySchema</p>
-</div>
-
-
-
+        
 
 
 <dl class="details">
@@ -103,7 +116,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PolySchema.js.html">PolySchema.js</a>, <a href="PolySchema.js.html#line13">line 13</a>
+        <a href="PolySchema.js.html">PolySchema.js</a>, <a href="PolySchema.js.html#line3">line 3</a>
     </li></ul></dd>
     
 
@@ -115,87 +128,7 @@
 </dl>
 
 
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
         
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>schema</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>json of keys to PolyTypes</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>const schema = new PolySchema({    _id: PolyTypes.string})</code></pre>
-
-</div>
-
-</div>
     
     </div>
 
@@ -212,26 +145,39 @@
     
 
     
-        <h3 class="subsection-title">Methods</h3>
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        src/PolyTypes.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>src/PolyTypes.js</p></div>
+        
 
         
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="validate"><span class="type-signature"></span>validate<span class="signature">(T, strict)</span><span class="type-signature"> &rarr; {boolean}</span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>determine if a object is valid according to the schema</p>
-</div>
-
-
-
 
 
 <dl class="details">
@@ -263,7 +209,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="PolySchema.js.html">PolySchema.js</a>, <a href="PolySchema.js.html#line32">line 32</a>
+        <a href="PolyTypes.js.html">PolyTypes.js</a>, <a href="PolyTypes.js.html#line1">line 1</a>
     </li></ul></dd>
     
 
@@ -275,147 +221,22 @@
 </dl>
 
 
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+        
     
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>T</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>object to validate</p>
-                
-            </td>
-        </tr>
+    </div>
 
     
 
-        <tr>
-            
-                <td class="name"><code>strict</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>boolean</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    false
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>if props should be required</p>
-                
-            </td>
-        </tr>
+    
 
     
-    </tbody>
-</table>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>boolean</code></span>
-
-
-    </dd>
-</dl>
-
+     
 
     
-</div>
 
+    
 
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>schema.validate({    _id: "Hello World"}) // => true</code></pre>
-
-</div>
-
-</div>
-        
     
 
     
@@ -433,7 +254,7 @@
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a> on Sun Mar 06 2022 12:25:22 GMT-0800 (Pacific Standard Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.10</a> on Sun Mar 06 2022 12:42:43 GMT-0800 (Pacific Standard Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

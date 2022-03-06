@@ -1,6 +1,6 @@
 {
   "name": "the-poly-schema",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The dead simple schema builder.",
   "main": "index.js",
   "type": "module",
