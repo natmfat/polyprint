@@ -1,13 +1,13 @@
 {
   "name": "poly-schema",
   "version": "1.0.0",
-  "description": "",
+  "description": "The dead simple schema builder.",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node tests"
   },
   "keywords": [],
-  "author": "",
+  "author": "Nathan Pham",
   "license": "ISC"
 }
