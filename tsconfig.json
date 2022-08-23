@@ -3,10 +3,7 @@
         "target": "es2016",
         "module": "commonjs",
         "rootDir": "./src",
-        "baseUrl": ".",
-        "paths": {
-            "@/*": ["src/*"]
-        },
+        "baseUrl": "./src",
         "outDir": "./dist",
         "forceConsistentCasingInFileNames": true,
         "strict": true,

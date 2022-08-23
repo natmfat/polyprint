@@ -1,3 +1,5 @@
+/** @file src/PolyCondition.ts */
+
 /**
  * Create a new condition, utility for PolyTypes & better errors in PolySchema
  */
@@ -28,7 +30,7 @@ export default class PolyCondition {
  * Wrapper around PolyCondition class
  * @param name - Name of the condition
  * @param condition - Condition function
- * @returns {PolyCondition}
+ * @returns new PolyCondition instance
  */
 export const pc = (name: string, condition: Function) =>
     new PolyCondition(name, condition);
