@@ -4,8 +4,7 @@
 
 The dead simple schema builder. See the [docs](https://nathan-pham.github.io/poly-schema/the-poly-schema/1.0.2/).
 
-Hold up. Why is this useful?  
-Good question friend on the Internet! Unfortunately, I don't have many answers...
+Hold up. Why is this useful? I've finally come up with an idea! This is really good for defining datastructures and simple form validation, without having to have a bunch of if statements. I'm currently rewriting the codebase to TypeScript.
 
 ## Installation
 
