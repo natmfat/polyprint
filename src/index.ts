@@ -1,3 +1,3 @@
-export { default as PolyCondition } from "./PolyCondition";
-export { default as PolyTypes } from "./PolyTypes";
-export { default } from "./PolySchema";
+export { default as PolyCondition } from "./PolyCondition.js";
+export { default as PolyTypes } from "./PolyTypes.js";
+export { default } from "./PolySchema.js";

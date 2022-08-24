@@ -1,12 +1,10 @@
-"use strict";
 /** @file src/PolySchema.ts */
-Object.defineProperty(exports, "__esModule", { value: true });
-const PolyCondition_1 = require("./PolyCondition");
-const PolyTypes_1 = require("./PolyTypes");
+import PolyCondition from "./PolyCondition.js";
+import PolyTypes from "./PolyTypes.js";
 /**
  * Core library for PolySchema
  */
-class PolySchema {
+export default class PolySchema {
     /**
      * PolySchema constructor
      * @param name - Name of the schema
@@ -53,7 +51,7 @@ class PolySchema {
      * schema.validate({ key: "value" });
      */
     validate(object, verbose = false, strict = null) {
-        strict = PolyTypes_1.default.null.getCondition()(strict) ? this.strict : strict;
+        strict = PolyTypes.null.getCondition()(strict) ? this.strict : strict;
         const errors = [];
         const main = (schema, value) => {
             // loop through values & check if all props are added
@@ -77,8 +75,8 @@ class PolySchema {
                         }
                     }
                     // check if prop is an object or if value matches condition
-                    else if (PolyTypes_1.default.object.getCondition()(condition) &&
-                        !(condition instanceof PolyCondition_1.default)) {
+                    else if (PolyTypes.object.getCondition()(condition) &&
+                        !(condition instanceof PolyCondition)) {
                         return main(schema[key], value[key]);
                     }
                     else if (!condition.getCondition()(value[key])) {
@@ -91,7 +89,7 @@ class PolySchema {
             }
             return errors;
         };
-        if (PolyTypes_1.default.object.getCondition()(object)) {
+        if (PolyTypes.object.getCondition()(object)) {
             main(this.schema, object);
         }
         else {
@@ -130,4 +128,3 @@ class PolySchema {
         return this;
     }
 }
-exports.default = PolySchema;

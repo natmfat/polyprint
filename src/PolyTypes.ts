@@ -1,6 +1,6 @@
 /** @file src/PolyTypes.ts  */
 
-import PolyCondition, { pc } from "./PolyCondition";
+import PolyCondition, { pc } from "./PolyCondition.js";
 
 const renderArray = (array: any[]) =>
     `${array.map((t) => `(${t})`).join(" | ")}`;

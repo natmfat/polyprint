@@ -1,7 +1,7 @@
 /** @file src/PolySchema.ts */
 
-import PolyCondition from "./PolyCondition";
-import PolyTypes from "./PolyTypes";
+import PolyCondition from "./PolyCondition.js";
+import PolyTypes from "./PolyTypes.js";
 
 type Fragment = Record<string, any>;
 type Errors = string[];
