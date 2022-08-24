@@ -73,7 +73,9 @@ class PolyTypes {
      * @returns new PolyCondition
      */
     static get object() {
-        return (0, PolyCondition_1.pc)(`object`, (value) => typeof value === "object");
+        return (0, PolyCondition_1.pc)(`object`, (value) => typeof value === "object" &&
+            !PolyTypes.null.getCondition()(value) &&
+            !PolyTypes.array.getCondition()(value));
     }
     /**
      * Condition that checks if the value is a function

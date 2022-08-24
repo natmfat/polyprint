@@ -91,7 +91,13 @@ export default class PolyTypes {
      * @returns new PolyCondition
      */
     static get object(): PolyCondition {
-        return pc(`object`, (value: any) => typeof value === "object");
+        return pc(
+            `object`,
+            (value: any) =>
+                typeof value === "object" &&
+                !PolyTypes.null.getCondition()(value) &&
+                !PolyTypes.array.getCondition()(value)
+        );
     }
 
     /**
