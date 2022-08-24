@@ -19,13 +19,30 @@ class PolySchema {
         this.strict = strict;
     }
     /**
+     * Copy the current schema
+     * @returns Copied schema
+     */
+    copy() {
+        return new PolySchema(this.name, Object.assign({}, this.schema), this.strict);
+    }
+    /**
+     * Merges another schema into the current schema; the new schema will override existing schema.
+     * Use copy to create a new schema instead of modifying the original
+     * @param schema - Schema to merge with current schema
+     * @returns New merged schema
+     */
+    merge(schema) {
+        this.schema = Object.assign(Object.assign({}, this.schema), schema);
+        return this;
+    }
+    /**
      * Validate an object against the schema
      * @param object - Object to validate against the schema
+     * @param verbose - Get errors (defaults to false)
      * @param strict - Override strict validation
-     * @param verbose - Get errors (defaults to true)
      * @returns if verbose, returns true/false for valid/invalid; if not verbose, returns array of errors
      */
-    validate(object, strict = null, verbose = true) {
+    validate(object, verbose = false, strict = null) {
         strict = PolyTypes_1.default.null.getCondition()(strict) ? this.strict : strict;
         const errors = [];
         const main = (schema, value) => {
@@ -70,6 +87,22 @@ class PolySchema {
      */
     getName() {
         return this.name;
+    }
+    /**
+     * Determine if the schema is in strict mode
+     * @returns If schema is strict
+     */
+    getStrict() {
+        return this.strict;
+    }
+    /**
+     * Set new strict mode
+     * @param strict - New strict mode
+     * @returns Current schema for chaining
+     */
+    setStrict(strict) {
+        this.strict = strict;
+        return this;
     }
 }
 exports.default = PolySchema;

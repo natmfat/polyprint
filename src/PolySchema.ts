@@ -27,16 +27,35 @@ export default class PolySchema {
     }
 
     /**
+     * Copy the current schema
+     * @returns Copied schema
+     */
+    copy() {
+        return new PolySchema(this.name, { ...this.schema }, this.strict);
+    }
+
+    /**
+     * Merges another schema into the current schema; the new schema will override existing schema.
+     * Use copy to create a new schema instead of modifying the original
+     * @param schema - Schema to merge with current schema
+     * @returns New merged schema
+     */
+    merge(schema: Fragment) {
+        this.schema = { ...this.schema, ...schema };
+        return this;
+    }
+
+    /**
      * Validate an object against the schema
      * @param object - Object to validate against the schema
+     * @param verbose - Get errors (defaults to false)
      * @param strict - Override strict validation
-     * @param verbose - Get errors (defaults to true)
      * @returns if verbose, returns true/false for valid/invalid; if not verbose, returns array of errors
      */
     validate(
-        object: Fragment,
-        strict: boolean | null = null,
-        verbose: boolean = true
+        object: any,
+        verbose: boolean = false,
+        strict: boolean | null = null
     ): Errors | boolean {
         strict = PolyTypes.null.getCondition()(strict) ? this.strict : strict;
         const errors: Errors = [];
@@ -96,4 +115,26 @@ export default class PolySchema {
     getName() {
         return this.name;
     }
+
+    /**
+     * Determine if the schema is in strict mode
+     * @returns If schema is strict
+     */
+    getStrict() {
+        return this.strict;
+    }
+
+    /**
+     * Set new strict mode
+     * @param strict - New strict mode
+     * @returns Current schema for chaining
+     */
+    setStrict(strict: boolean) {
+        this.strict = strict;
+        return this;
+    }
+
+    // TODO: schema.equals(anotherSchema)
+    // TODO: schema.serialize(), convert into JSON format
+    // TODO: schema.parse(), load from file or string
 }
