@@ -1,6 +1,3 @@
-import PolyCondition from "./PolyCondition";
-import PolySchema from "./PolySchema";
-import PolyTypes from "./PolyTypes";
-
-export default PolySchema;
-export { PolyTypes, PolyCondition };
+export { default as PolyCondition } from "./PolyCondition";
+export { default as PolyTypes } from "./PolyTypes";
+export { default } from "./PolySchema";
