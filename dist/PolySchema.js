@@ -12,6 +12,8 @@ class PolySchema {
      * @param name - Name of the schema
      * @param schema - Schema to validate against
      * @param strict - Use strict validation to check existence of certain keys (defaults to false)
+     * @example
+     * const schema = new PolySchema("Document Schema", { key: PolyTypes.string });
      */
     constructor(name, schema, strict = false) {
         this.name = name;
@@ -21,6 +23,8 @@ class PolySchema {
     /**
      * Copy the current schema
      * @returns Copied schema
+     * @example
+     * schema.copy().validate({})
      */
     copy() {
         return new PolySchema(this.name, Object.assign({}, this.schema), this.strict);
@@ -30,9 +34,13 @@ class PolySchema {
      * Use copy to create a new schema instead of modifying the original
      * @param schema - Schema to merge with current schema
      * @returns New merged schema
+     * @example
+     * schema.merge(new PolySchema("New Schema", { key: PolyTypes.string }))
+     * @example
+     * schema.merge({ key: PolyTypes.string })
      */
     merge(schema) {
-        this.schema = Object.assign(Object.assign({}, this.schema), schema);
+        this.schema = Object.assign(Object.assign({}, this.schema), (schema instanceof PolySchema ? schema.getSchema() : schema));
         return this;
     }
     /**
@@ -41,6 +49,8 @@ class PolySchema {
      * @param verbose - Get errors (defaults to false)
      * @param strict - Override strict validation
      * @returns if verbose, returns true/false for valid/invalid; if not verbose, returns array of errors
+     * @example
+     * schema.validate({ key: "value" });
      */
     validate(object, verbose = false, strict = null) {
         strict = PolyTypes_1.default.null.getCondition()(strict) ? this.strict : strict;
@@ -58,13 +68,21 @@ class PolySchema {
             for (const [key, condition] of Object.entries(schema)) {
                 // check if prop exists
                 if (value.hasOwnProperty(key)) {
+                    // allow for nested schemas
+                    if (condition instanceof PolySchema) {
+                        const errors = condition.validate(value[key], verbose, strict);
+                        // add errors if necessary
+                        if (errors && Array.isArray(errors)) {
+                            errors.forEach((error) => errors.push(error));
+                        }
+                    }
                     // check if prop is an object or if value matches condition
-                    if (PolyTypes_1.default.object.getCondition()(condition) &&
+                    else if (PolyTypes_1.default.object.getCondition()(condition) &&
                         !(condition instanceof PolyCondition_1.default)) {
                         return main(schema[key], value[key]);
                     }
                     else if (!condition.getCondition()(value[key])) {
-                        errors.push(`${key} is not a valid value for ${condition.getName()}`);
+                        errors.push(`${key} of ${value[key]} is not a valid value for type ${condition.getName()}`);
                     }
                 }
                 else if (strict) {
@@ -94,6 +112,13 @@ class PolySchema {
      */
     getStrict() {
         return this.strict;
+    }
+    /**
+     * Get the schema
+     * @returns Schema
+     */
+    getSchema() {
+        return this.schema;
     }
     /**
      * Set new strict mode
