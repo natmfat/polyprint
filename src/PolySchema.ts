@@ -26,11 +26,18 @@ export default class PolySchema {
         this.strict = strict;
     }
 
+    /**
+     * Validate an object against the schema
+     * @param object - Object to validate against the schema
+     * @param strict - Override strict validation
+     * @param verbose - Get errors (defaults to true)
+     * @returns if verbose, returns true/false for valid/invalid; if not verbose, returns array of errors
+     */
     validate(
         object: Fragment,
         strict: boolean | null = null,
         verbose: boolean = true
-    ): Errors {
+    ): Errors | boolean {
         strict = PolyTypes.null.getCondition()(strict) ? this.strict : strict;
         const errors: Errors = [];
 
@@ -72,9 +79,21 @@ export default class PolySchema {
         };
 
         if (PolyTypes.object.getCondition()(object)) {
-            return main(this.schema, object);
+            main(this.schema, object);
+        } else {
+            errors.push(
+                `${object} is not a valid object, cannot check against schema`
+            );
         }
 
-        return errors;
+        return verbose ? errors : errors.length === 0;
+    }
+
+    /**
+     * Get the name of the schema
+     * @returns Name of the schema
+     */
+    getName() {
+        return this.name;
     }
 }

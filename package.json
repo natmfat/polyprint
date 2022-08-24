@@ -1,7 +1,7 @@
 {
     "name": "poly-schema",
-    "version": "1.0.0",
-    "description": "![project banner](https://project-banner.phamn23.repl.co/?title=Poly+Schema&description=The+dead+simple+schema+builder.&stack=node)",
+    "version": "1.0.3",
+    "description": "The dead simple schema builder.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "files": [

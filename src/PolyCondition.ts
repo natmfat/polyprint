@@ -17,16 +17,28 @@ export default class PolyCondition {
         this.condition = condition;
     }
 
-    getName() {
+    /**
+     * Get the name of the condition
+     * @returns Name of condition
+     */
+    getName(): string {
         return this.name;
     }
 
-    getCondition() {
-        return this.condition;
-    }
-
+    /**
+     * Get the name of the condition
+     * @returns Name of condition
+     */
     toString() {
         return this.name;
+    }
+
+    /**
+     * Get the condition function
+     * @returns Condition function
+     */
+    getCondition() {
+        return this.condition;
     }
 }
 

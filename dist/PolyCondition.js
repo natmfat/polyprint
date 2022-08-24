@@ -15,14 +15,26 @@ class PolyCondition {
         this.name = name;
         this.condition = condition;
     }
+    /**
+     * Get the name of the condition
+     * @returns Name of condition
+     */
     getName() {
         return this.name;
     }
-    getCondition() {
-        return this.condition;
-    }
+    /**
+     * Get the name of the condition
+     * @returns Name of condition
+     */
     toString() {
         return this.name;
+    }
+    /**
+     * Get the condition function
+     * @returns Condition function
+     */
+    getCondition() {
+        return this.condition;
     }
 }
 exports.default = PolyCondition;

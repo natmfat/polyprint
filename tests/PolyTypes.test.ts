@@ -1,4 +1,4 @@
-import PolyTypes from "../src/PolyTypes";
+import { PolyTypes } from "../src";
 
 test("instanceOf car should be Car", () => {
     class Bike {}
