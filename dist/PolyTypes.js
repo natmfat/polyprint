@@ -2,6 +2,7 @@
 /** @file src/PolyTypes.ts  */
 Object.defineProperty(exports, "__esModule", { value: true });
 const PolyCondition_1 = require("./PolyCondition");
+const renderArray = (array) => `${array.map((t) => `(${t})`).join(" | ")}`;
 /**
  * PolyTypes is a collection of types that are used to create a new PolySchema.
  */
@@ -23,7 +24,7 @@ class PolyTypes {
      * @returns new PolyCondition
      */
     static enum(...constants) {
-        return (0, PolyCondition_1.pc)(`enum ${constants.join(" | ")}`, (value) => constants.includes(value));
+        return (0, PolyCondition_1.pc)(`enum ${renderArray(constants)}`, (value) => constants.includes(value));
     }
     /**
      * Condition of multiple conditions
@@ -31,7 +32,7 @@ class PolyTypes {
      * @returns new PolyCondition
      */
     static union(...arrayTypes) {
-        return (0, PolyCondition_1.pc)(`union ${arrayTypes.join(" | ")}`, (value) => arrayTypes.some((type) => type.condition(value)));
+        return (0, PolyCondition_1.pc)(`union ${renderArray(arrayTypes)}`, (value) => arrayTypes.some((type) => type.condition(value)));
     }
     /**
      * Condition that checks if the value is null

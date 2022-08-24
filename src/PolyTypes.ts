@@ -2,6 +2,9 @@
 
 import PolyCondition, { pc } from "./PolyCondition";
 
+const renderArray = (array: any[]) =>
+    `${array.map((t) => `(${t})`).join(" | ")}`;
+
 /**
  * PolyTypes is a collection of types that are used to create a new PolySchema.
  */
@@ -27,7 +30,7 @@ export default class PolyTypes {
      * @returns new PolyCondition
      */
     static enum(...constants: any[]): PolyCondition {
-        return pc(`enum ${constants.join(" | ")}`, (value: any) =>
+        return pc(`enum ${renderArray(constants)}`, (value: any) =>
             constants.includes(value)
         );
     }
@@ -38,7 +41,7 @@ export default class PolyTypes {
      * @returns new PolyCondition
      */
     static union(...arrayTypes: any[]): PolyCondition {
-        return pc(`union ${arrayTypes.join(" | ")}`, (value: any) =>
+        return pc(`union ${renderArray(arrayTypes)}`, (value: any) =>
             arrayTypes.some((type) => type.condition(value))
         );
     }

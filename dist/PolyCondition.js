@@ -21,6 +21,9 @@ class PolyCondition {
     getCondition() {
         return this.condition;
     }
+    toString() {
+        return this.name;
+    }
 }
 exports.default = PolyCondition;
 /**
