@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Home - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="module.exports.html">exports</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#array">array</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#boolean">boolean</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#copy">copy</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#enum">enum</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#function">function</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getCondition">getCondition</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getName">getName</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getSchema">getSchema</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#getStrict">getStrict</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#instanceOf">instanceOf</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#merge">merge</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#null">null</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#number">number</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#object">object</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#pc">pc</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#setStrict">setStrict</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#string">string</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#toString">toString</a></span></li><li class="nav-item"><span class="nav-item-type type-member">M</span><span class="nav-item-name"><a href="global.html#undefined">undefined</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#union">union</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#validate">validate</a></span></li>
+</nav>
+
+<div id="main">
+    
+
+    
+
+
+
+    
+
+
+
+
+
+
+
+
+
+    
+
+
+    <section class="readme">
+        <article><p><img src="https://project-banner.phamn23.repl.co/?title=Poly+Schema&amp;description=The+dead+simple+schema+builder.&amp;stack=node" alt="project banner"></p>
+<h1>Poly Schema</h1>
+<p>The dead simple schema builder that allows you to define and validate custom data structures. See the <a href="https://nathan-pham.github.io/poly-schema/the-poly-schema/1.0.4/">docs</a>.</p>
+<h2>Installation</h2>
+<pre class="prettyprint source"><code>>>> npm install the-poly-schema
+</code></pre>
+<pre class="prettyprint source lang-js"><code>import PolySchema, { PolyTypes } from &quot;the-poly-schema&quot;;
+</code></pre>
+<h2>Usage</h2>
+<p>This is a schema. You can use schemas to better define your data, which can be useful in form validation. In general, PolySchemas are composed of a dictionary with keys and values equal to some <code>PolyType</code>, <code>PolySchema</code>, or another dictionary.</p>
+<pre class="prettyprint source lang-js"><code>const schema = new PolySchema(&quot;Document Schema&quot;, {
+    _createdAt: PolyTypes.instanceOf(Date),
+    _updatedAt: PolyTypes.instanceOf(Date),
+    title: PolyTypes.string,
+    body: PolyTypes.string,
+
+    // nested schema
+    user: new PolySchema(&quot;Document Schema Child&quot;, {
+        name: PolyTypes.string,
+    }),
+
+    // this will also work (but will not instantiate a new PolySchema)
+    user: {
+        name: PolyTypes.string,
+    },
+});
+</code></pre>
+<h3>Validating data</h3>
+<p><code>validate</code> allows you to validate some data. It also accepts several arguments beyond a data structure, including <code>verbose</code> and <code>strict</code>.</p>
+<ul>
+<li><code>verbose</code>: Will return an array of errors instead of true or false (defaults to false)</li>
+<li><code>strict</code>: Enable strict mode (discussed below, defaults to schema value)</li>
+</ul>
+<pre class="prettyprint source lang-js"><code>schema.validate({
+    title: &quot;Hello World&quot;,
+}); // => true
+
+schema.validate({
+    title: 0,
+}); // => false
+
+schema.validate(
+    {
+        title: 0,
+    },
+    false,
+    true
+); // => false because strict mode is enabled
+</code></pre>
+<h3>Strict Mode</h3>
+<p>By default, schemas are NOT in strict mode, which means it will ignore extra or missing keys. You can easily enable or disable strict mode, or override your choice when you call <code>validate</code>.</p>
+<p>Method 1: Create a new schema with strict mode by default</p>
+<pre class="prettyprint source lang-js"><code>new PolySchema(&quot;Untitled Schema&quot;, {}, true);
+</code></pre>
+<p>Method 2: Change strict mode later</p>
+<pre class="prettyprint source lang-js"><code>schema.setStrict(true);
+</code></pre>
+<p>Method 3: Override in <code>validate</code></p>
+<pre class="prettyprint source lang-js"><code>schema.validate({}, false, true);
+</code></pre>
+<h3>Flexible Types</h3>
+<p>In addition to basic primitives like <code>number</code> and <code>string</code>, you can &quot;compose&quot; types with <code>enum</code> and <code>union</code>. You can find a full list of all of the types supported by <code>PolyType</code> in the file docs.</p>
+<p>Union is like &quot;or&quot;, so <code>flexibleType</code> can either be a string or a number.</p>
+<pre class="prettyprint source lang-js"><code>{
+    flexibleType: PolyTypes.union(PolyTypes.string, PolyTypes.number);
+}
+</code></pre>
+<p>Enums are for literal values, so <code>enumType</code> can be &quot;RED&quot;, &quot;BLUE&quot;, or &quot;GREEN&quot; (but nothing else).</p>
+<pre class="prettyprint source lang-js"><code>{
+    enumType: PolyTypes.enum(&quot;RED&quot;, &quot;BLUE&quot;, &quot;GREEN&quot;);
+}
+</code></pre>
+<p>You can also create custom types (perhaps for a more custom situation) with <code>PolyCondition</code>.</p>
+<pre class="prettyprint source lang-js"><code>import { PolyCondition } from &quot;the-poly-schema&quot;;
+
+{
+    customType: new PolyCondition(
+        &quot;String of length 3&quot;,
+        (value: any) => typeof value === &quot;string&quot; && value.length === 3
+    );
+}
+</code></pre></article>
+    </section>
+
+
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        dist/PolyCondition.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>src/PolyCondition.ts</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="PolyCondition.js.html">PolyCondition.js</a>, <a href="PolyCondition.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        dist/PolySchema.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>src/PolySchema.ts</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="PolySchema.js.html">PolySchema.js</a>, <a href="PolySchema.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        dist/PolyTypes.js
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>src/PolyTypes.ts</p></div>
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="PolyTypes.js.html">PolyTypes.js</a>, <a href="PolyTypes.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a> on Tue Aug 23 2022 20:17:54 GMT-0700 (Pacific Daylight Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
