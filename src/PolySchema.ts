@@ -13,11 +13,6 @@ type OptionalConfig =
     }
   | undefined;
 
-const DEFAULT_OPTIONAL_CONFIG = {
-  verbose: undefined,
-  strict: undefined,
-} as const;
-
 /**
  * Core library for PolySchema
  */
@@ -42,10 +37,7 @@ export class PolySchema extends PolyTypes {
   constructor(
     name: string,
     schema: Fragment,
-    {
-      strict = false,
-      verbose = false,
-    }: OptionalConfig = DEFAULT_OPTIONAL_CONFIG
+    { strict = false, verbose = false }: OptionalConfig = {}
   ) {
     super();
     this.name = name;
@@ -98,7 +90,7 @@ export class PolySchema extends PolyTypes {
    */
   validate(
     object: any,
-    { verbose, strict }: OptionalConfig = DEFAULT_OPTIONAL_CONFIG
+    { verbose, strict }: OptionalConfig = {}
   ): Errors | boolean {
     strict = PolyTypes.undefined.getCondition()(strict) ? this.strict : strict;
     verbose = PolyTypes.undefined.getCondition()(strict)
