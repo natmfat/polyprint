@@ -1,37 +1,39 @@
 {
-    "name": "the-poly-schema",
-    "version": "1.0.6",
-    "description": "The dead simple schema builder.",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
-    "type": "module",
-    "files": [
-        "/dist"
-    ],
-    "scripts": {
-        "test": "jest",
-        "dev": "tsc --watch",
-        "build": "tsc",
-        "start": "node dist/index.js",
-        "docs": "jsdoc --configure ./jsdoc.json"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/nathan-pham/poly-schema.git"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/nathan-pham/poly-schema/issues"
-    },
-    "homepage": "https://github.com/nathan-pham/poly-schema#readme",
-    "devDependencies": {
-        "@types/jest": "^28.1.7",
-        "jest": "^28.1.3",
-        "jsdoc": "^3.6.11",
-        "minami": "^1.2.3",
-        "ts-jest": "^28.0.8",
-        "typescript": "^4.7.4"
-    }
+  "name": "polyprint",
+  "version": "1.0.0",
+  "description": "A dead simple schema builder.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "test": "vitest",
+    "dev": "tsc --watch",
+    "build": "tsc",
+    "build:docs": "jsdoc --configure ./jsdoc.json",
+    "prepublishOnly": "pnpm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/natmfat/polyprint.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/natmfat/polyprint/issues"
+  },
+  "homepage": "https://github.com/natmfat/polyprint#readme",
+  "devDependencies": {
+    "@types/node": "^22.13.14",
+    "jsdoc": "^3.6.11",
+    "typescript": "^4.7.4",
+    "vite": "^6.2.3",
+    "vitest": "^3.0.9"
+  },
+  "dependencies": {
+    "minami": "^1.2.3"
+  }
 }

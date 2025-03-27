@@ -1,39 +1,43 @@
-![project banner](https://project-banner.phamn23.repl.co/?title=Poly+Schema&description=The+dead+simple+schema+builder.&stack=node)
+# Polyprint
 
-# Poly Schema
+A dead simple schema builder.
 
-The dead simple schema builder that allows you to define and validate custom data structures. See the [docs](https://nathan-pham.github.io/poly-schema/the-poly-schema/1.0.4/).
+There are certainly better alternatives (namely Zod) that provide actual type validation, but Polyprint is dependency free, lightweight, and small. It's great when you just need a simple syntax to make sure forms and objects have a certain structure.
 
 ## Installation
 
 ```
->>> npm install the-poly-schema
+>>> pnpm install polyprint
 ```
 
 ```js
-import PolySchema, { PolyTypes } from "the-poly-schema";
+import PolySchema, { PolyTypes } from "polyprint";
 ```
 
 ## Usage
 
-This is a schema. You can use schemas to better define your data, which can be useful in form validation. In general, PolySchemas are composed of a dictionary with keys and values equal to some `PolyType`, `PolySchema`, or another dictionary.
+This is a schema.
+
+Schemas are great when you know the structure of your data, and you can use them for form validation. With `polyprint`,
+
+You can use schemas to better define your data, which can be useful in form validation. In general, PolySchemas are composed of a dictionary with keys and values equal to some `PolyType`, `PolySchema`, or another dictionary.
 
 ```js
 const schema = new PolySchema("Document Schema", {
-    _createdAt: PolyTypes.instanceOf(Date),
-    _updatedAt: PolyTypes.instanceOf(Date),
-    title: PolyTypes.string,
-    body: PolyTypes.string,
+  _createdAt: PolyTypes.instanceOf(Date),
+  _updatedAt: PolyTypes.instanceOf(Date),
+  title: PolyTypes.string,
+  body: PolyTypes.string,
 
-    // nested schema
-    user: new PolySchema("Document Schema Child", {
-        name: PolyTypes.string,
-    }),
+  // nested schema
+  user: new PolySchema("Document Schema Child", {
+    name: PolyTypes.string,
+  }),
 
-    // this will also work (but will not instantiate a new PolySchema)
-    user: {
-        name: PolyTypes.string,
-    },
+  // this will also work (but will not instantiate a new PolySchema)
+  user: {
+    name: PolyTypes.string,
+  },
 });
 ```
 
@@ -41,24 +45,24 @@ const schema = new PolySchema("Document Schema", {
 
 `validate` allows you to validate some data. It also accepts several arguments beyond a data structure, including `verbose` and `strict`.
 
--   `verbose`: Will return an array of errors instead of true or false (defaults to false)
--   `strict`: Enable strict mode (discussed below, defaults to schema value)
+- `verbose`: Will return an array of errors instead of true or false (defaults to false)
+- `strict`: Enable strict mode (discussed below, defaults to schema value)
 
 ```js
 schema.validate({
-    title: "Hello World",
+  title: "Hello World",
 }); // => true
 
 schema.validate({
-    title: 0,
+  title: 0,
 }); // => false
 
 schema.validate(
-    {
-        title: 0,
-    },
-    false,
-    true
+  {
+    title: 0,
+  },
+  false,
+  true
 ); // => false because strict mode is enabled
 ```
 
@@ -92,7 +96,7 @@ Union is like "or", so `flexibleType` can either be a string or a number.
 
 ```js
 {
-    flexibleType: PolyTypes.union(PolyTypes.string, PolyTypes.number);
+  flexibleType: PolyTypes.union(PolyTypes.string, PolyTypes.number);
 }
 ```
 
@@ -100,7 +104,7 @@ Enums are for literal values, so `enumType` can be "RED", "BLUE", or "GREEN" (bu
 
 ```js
 {
-    enumType: PolyTypes.enum("RED", "BLUE", "GREEN");
+  enumType: PolyTypes.enum("RED", "BLUE", "GREEN");
 }
 ```
 
@@ -110,9 +114,9 @@ You can also create custom types (perhaps for a more custom situation) with `Pol
 import { PolyCondition } from "the-poly-schema";
 
 {
-    customType: new PolyCondition(
-        "String of length 3",
-        (value: any) => typeof value === "string" && value.length === 3
-    );
+  customType: new PolyCondition(
+    "String of length 3",
+    (value: any) => typeof value === "string" && value.length === 3
+  );
 }
 ```
