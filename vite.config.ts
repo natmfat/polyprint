@@ -14,5 +14,9 @@ export default defineConfig({
     },
   },
 
+  esbuild: {
+    minifyIdentifiers: false,
+  },
+
   plugins: [dts()],
 });

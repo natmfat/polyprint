@@ -112,7 +112,7 @@ schema.validate({}, { strict: true });
 
 ### Flexible Types
 
-In addition to basic primitives like `number` and `string`, you can "compose" types with `enum` and `union`. You can find a full list of all of the types supported by `PolyType` in the file docs.
+In addition to basic primitives like `number` and `string`, you can "compose" types with `enum` and `union`.
 
 Union is like "or", so `flexibleType` can either be a string or a number.
 
