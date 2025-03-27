@@ -6,27 +6,52 @@ import { PolyTypes } from "./PolyTypes";
 type Fragment = Record<string, any>;
 type Errors = string[];
 
+type OptionalConfig =
+  | {
+      verbose?: boolean;
+      strict?: boolean;
+    }
+  | undefined;
+
+const DEFAULT_OPTIONAL_CONFIG = {
+  verbose: undefined,
+  strict: undefined,
+} as const;
+
 /**
  * Core library for PolySchema
  */
 export class PolySchema extends PolyTypes {
-  private name: string;
-  private schema: Fragment;
-  private strict: boolean;
+  name: string;
+  schema: Fragment;
+  strict: boolean;
+  verbose: boolean;
+
+  static Schema = PolySchema;
 
   /**
    * PolySchema constructor
    * @param name - Name of the schema
    * @param schema - Schema to validate against
-   * @param strict - Use strict validation to check existence of certain keys (defaults to false)
+   * @param config - Set default options to change the behavior of the validator
+   * @param config.verbose - Get errors instead of a success/failure boolean (defaults to false)
+   * @param config.strict - Strict validation to check existence of certain keys (defaults to false)
    * @example
    * const schema = new PolySchema("Document Schema", { key: PolyTypes.string });
    */
-  constructor(name: string, schema: Fragment, strict = false) {
+  constructor(
+    name: string,
+    schema: Fragment,
+    {
+      strict = false,
+      verbose = false,
+    }: OptionalConfig = DEFAULT_OPTIONAL_CONFIG
+  ) {
     super();
     this.name = name;
     this.schema = schema;
     this.strict = strict;
+    this.verbose = verbose;
   }
 
   /**
@@ -36,7 +61,11 @@ export class PolySchema extends PolyTypes {
    * schema.copy().validate({})
    */
   copy() {
-    return new PolySchema(this.name, { ...this.schema }, this.strict);
+    return new PolySchema(
+      this.name,
+      { ...this.schema },
+      { strict: this.strict }
+    );
   }
 
   /**
@@ -52,7 +81,7 @@ export class PolySchema extends PolyTypes {
   merge(schema: PolySchema | Fragment) {
     this.schema = {
       ...this.schema,
-      ...(schema instanceof PolySchema ? schema.getSchema() : schema),
+      ...(schema instanceof PolySchema ? schema.schema : schema),
     };
     return this;
   }
@@ -60,18 +89,22 @@ export class PolySchema extends PolyTypes {
   /**
    * Validate an object against the schema
    * @param object - Object to validate against the schema
-   * @param verbose - Get errors (defaults to false)
-   * @param strict - Override strict validation
-   * @returns if verbose, returns true/false for valid/invalid; if not verbose, returns array of errors
+   * @param config - Additional options to change the behavior of the validator
+   * @param config.verbose - Override verbose setting
+   * @param config.strict - Override strict validation
+   * @returns If verbose, returns array of errors; otherwise, returns true for success and false for failure
    * @example
    * schema.validate({ key: "value" });
    */
   validate(
     object: any,
-    verbose: boolean = false,
-    strict: boolean | null = null
+    { verbose, strict }: OptionalConfig = DEFAULT_OPTIONAL_CONFIG
   ): Errors | boolean {
-    strict = PolyTypes.null.getCondition()(strict) ? this.strict : strict;
+    strict = PolyTypes.undefined.getCondition()(strict) ? this.strict : strict;
+    verbose = PolyTypes.undefined.getCondition()(strict)
+      ? this.verbose
+      : verbose;
+
     const errors: Errors = [];
 
     const main = (schema: Fragment, value: Fragment): Errors => {
@@ -89,7 +122,7 @@ export class PolySchema extends PolyTypes {
         if (value.hasOwnProperty(key)) {
           // allow for nested schemas
           if (condition instanceof PolySchema) {
-            const errors = condition.validate(value[key], verbose, strict);
+            const errors = condition.validate(value[key], { verbose, strict });
 
             // add errors if necessary
             if (errors && Array.isArray(errors)) {
@@ -127,40 +160,6 @@ export class PolySchema extends PolyTypes {
     }
 
     return verbose ? errors : errors.length === 0;
-  }
-
-  /**
-   * Get the name of the schema
-   * @returns Name of the schema
-   */
-  getName() {
-    return this.name;
-  }
-
-  /**
-   * Determine if the schema is in strict mode
-   * @returns If schema is strict
-   */
-  getStrict() {
-    return this.strict;
-  }
-
-  /**
-   * Get the schema
-   * @returns Schema
-   */
-  getSchema() {
-    return this.schema;
-  }
-
-  /**
-   * Set new strict mode
-   * @param strict - New strict mode
-   * @returns Current schema for chaining
-   */
-  setStrict(strict: boolean) {
-    this.strict = strict;
-    return this;
   }
 
   // TODO: schema.equals(anotherSchema)

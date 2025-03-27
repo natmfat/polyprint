@@ -1,18 +1,20 @@
 /** @file src/PolyCondition.ts */
 
+export type PolyConditionFunction = (value: unknown) => boolean;
+
 /**
  * Create a new condition, utility for PolyTypes & better errors in PolySchema
  */
 export class PolyCondition {
   private name: string;
-  private condition: Function;
+  private condition: PolyConditionFunction;
 
   /**
    * PolyCondition constructor
    * @param name - Name of the condition
    * @param condition - Condition function
    */
-  constructor(name: string, condition: Function) {
+  constructor(name: string, condition: PolyConditionFunction) {
     this.name = name;
     this.condition = condition;
   }
@@ -41,12 +43,3 @@ export class PolyCondition {
     return this.condition;
   }
 }
-
-/**
- * Wrapper around PolyCondition class
- * @param name - Name of the condition
- * @param condition - Condition function
- * @returns new PolyCondition instance
- */
-export const pc = (name: string, condition: Function) =>
-  new PolyCondition(name, condition);

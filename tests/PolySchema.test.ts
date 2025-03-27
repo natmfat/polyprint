@@ -1,14 +1,12 @@
-import PolySchema, { p } from "../src";
+import { PolySchema, p } from "../src";
 import { test, expect } from "vitest";
 
-const schema = new PolySchema("Document Schema", {
+const schema = new p.Schema("Document Schema", {
   _createdAt: p.instanceOf(Date),
   _updatedAt: p.instanceOf(Date),
   title: p.string,
   body: p.string,
 });
-
-const strictSchema = schema.copy().setStrict(true);
 
 test("Schema against empty object or literal", () => {
   expect(schema.validate({})).toBe(true); // empty object
@@ -33,23 +31,21 @@ test("Schema against valid object", () => {
         _updatedAt: new Date(),
         title: "Hello World!",
       },
-      false,
-      true
+      {
+        verbose: false,
+        strict: true,
+      }
     )
   ).toBe(false);
 });
 
 test("Nested schemas", () => {
-  const userSchema = new PolySchema(
-    "User",
-    {
-      _createdAt: p.instanceOf(Date),
-      id: new PolySchema("User Data", {
-        name: p.string,
-      }),
-    },
-    true
-  );
+  const userSchema = new PolySchema("User", {
+    _createdAt: p.instanceOf(Date),
+    id: new PolySchema("User Data", {
+      name: p.string,
+    }),
+  });
 
   expect(
     userSchema.validate({ _createdAt: new Date(), id: { name: "John" } })
@@ -57,34 +53,33 @@ test("Nested schemas", () => {
 });
 
 test("Merged schema with objects", () => {
-  const userSchema = new PolySchema("User", { id: p.string }, true);
+  const userSchema = new PolySchema("User", { id: p.string }, { strict: true });
   userSchema.merge({ name: p.string });
 
   expect(userSchema.validate({ id: "John", name: "John" })).toBe(true);
 });
 
 test("Merged schema with another schema", () => {
-  const userSchema = new PolySchema("User", { id: p.string }, true);
+  const userSchema = new PolySchema("User", { id: p.string }, { strict: true });
   userSchema.merge(new PolySchema("User Fragment", { name: p.string }));
 
   expect(userSchema.validate({ id: "John", name: "John" })).toBe(true);
 });
 
 test("Strict schema", () => {
+  const strictSchema = schema.copy();
+  strictSchema.strict = true;
+
   expect(strictSchema.validate({ _createdAt: new Date() })).toBe(false);
 });
 
 test("Custom PolyCondition", () => {
-  const customSchema = new PolySchema(
-    "Custom Schema",
-    {
-      id: p.condition(
-        "Must have length of 3",
-        (value: any) => value.length === 3
-      ),
-    },
-    true
-  );
+  const customSchema = new PolySchema("Custom Schema", {
+    id: p.condition(
+      "Must have length of 3",
+      (value: any) => value.length === 3
+    ),
+  });
 
   expect(customSchema.validate({ id: "sdf" })).toBe(true);
   expect(customSchema.validate({ id: "sddf" })).toBe(false);

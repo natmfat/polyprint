@@ -11,7 +11,7 @@
   "scripts": {
     "test": "vitest",
     "dev": "tsc --watch",
-    "build": "tsc",
+    "build": "vite build",
     "build:docs": "jsdoc --configure ./jsdoc.json",
     "prepublishOnly": "pnpm run build"
   },
@@ -31,6 +31,7 @@
     "jsdoc": "^3.6.11",
     "typescript": "^4.7.4",
     "vite": "^6.2.3",
+    "vite-plugin-dts": "^4.5.3",
     "vitest": "^3.0.9"
   },
   "dependencies": {

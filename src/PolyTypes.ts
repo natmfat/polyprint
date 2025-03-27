@@ -1,6 +1,6 @@
 /** @file src/PolyTypes.ts  */
 
-import { PolyCondition } from "./PolyCondition";
+import { PolyCondition, PolyConditionFunction } from "./PolyCondition";
 
 const renderArray = (array: any[]) =>
   `${array.map((t) => `(${t})`).join(" | ")}`;
@@ -30,7 +30,7 @@ export class PolyTypes {
    * @param condition - Condition function
    * @returns new PolyCondition instance
    */
-  static condition(name: string, condition: Function) {
+  static condition(name: string, condition: PolyConditionFunction) {
     return new PolyCondition(name, condition);
   }
 

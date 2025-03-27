@@ -2,7 +2,7 @@
 
 A dead simple schema builder.
 
-There are certainly better alternatives (namely Zod) that provide actual type validation, but Polyprint is dependency free, lightweight, and small. It's great when you just need a simple syntax to make sure forms and objects have a certain structure.
+There are certainly better alternatives (namely Zod) that provide actual type validation in TypeScript, but Polyprint is dependency free, lightweight, and small. By forgoing typecasting, Polyprint is far simpler and more JavaScript focused. It provides a basic syntax to ensure forms and objects have the right structure, and that's it.
 
 ## Installation
 
@@ -11,7 +11,7 @@ There are certainly better alternatives (namely Zod) that provide actual type va
 ```
 
 ```js
-import PolySchema, { PolyTypes } from "polyprint";
+import { p } from "polyprint";
 ```
 
 ## Usage
@@ -41,6 +41,27 @@ const schema = new PolySchema("Document Schema", {
 });
 ```
 
+We also provide an alternative export `p`, which provides methods to instantiate `PolySchema`, `PolyType`, and `PolyCondition` using a single namespace. This can result in more concise code at the cost of readability.
+
+```js
+const schema = new p.Schema("Document Schema", {
+  _createdAt: p.instanceOf(Date),
+  _updatedAt: p.instanceOf(Date),
+  title: p.string,
+  body: p.string,
+
+  // nested schema
+  user: new PolySchema("Document Schema Child", {
+    name: p.string,
+  }),
+
+  // this will also work (but will not instantiate a new PolySchema)
+  user: {
+    name: p.string,
+  },
+});
+```
+
 ### Validating data
 
 `validate` allows you to validate some data. It also accepts several arguments beyond a data structure, including `verbose` and `strict`.
@@ -61,8 +82,9 @@ schema.validate(
   {
     title: 0,
   },
-  false,
-  true
+  {
+    strict: true,
+  }
 ); // => false because strict mode is enabled
 ```
 
@@ -73,19 +95,19 @@ By default, schemas are NOT in strict mode, which means it will ignore extra or 
 Method 1: Create a new schema with strict mode by default
 
 ```js
-new PolySchema("Untitled Schema", {}, true);
+new PolySchema("Untitled Schema", {}, { strict: true });
 ```
 
 Method 2: Change strict mode later
 
 ```js
-schema.setStrict(true);
+schema.strict = true;
 ```
 
 Method 3: Override in `validate`
 
 ```js
-schema.validate({}, false, true);
+schema.validate({}, { strict: true });
 ```
 
 ### Flexible Types
@@ -111,12 +133,10 @@ Enums are for literal values, so `enumType` can be "RED", "BLUE", or "GREEN" (bu
 You can also create custom types (perhaps for a more custom situation) with `PolyCondition`.
 
 ```js
-import { PolyCondition } from "the-poly-schema";
+import { PolyCondition } from "polyprint";
 
-{
-  customType: new PolyCondition(
-    "String of length 3",
-    (value: any) => typeof value === "string" && value.length === 3
-  );
-}
+new PolyCondition(
+  "String of length 3",
+  (value: any) => typeof value === "string" && value.length === 3
+);
 ```
